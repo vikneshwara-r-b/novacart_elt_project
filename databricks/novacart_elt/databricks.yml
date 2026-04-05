@@ -4,6 +4,11 @@ bundle:
   name: novacart_elt
   uuid: 9ea62b31-5428-4498-b80c-50d44e71ad66
 
+# Enable direct deployment engine — required for Unity Catalog resources (catalogs, schemas)
+# Requires Databricks CLI >= 0.287.0
+deployment:
+  kind: BUNDLE
+
 # Variables - Set via environment variables before deployment
 variables:
   user_email:

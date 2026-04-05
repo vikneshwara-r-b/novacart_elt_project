@@ -17,7 +17,7 @@ resources:
     gold_schema:
       name: gold_schema
       catalog_name: ${resources.catalogs.novacart_catalog.name}
-      comment: Gold Schema in custom novacart catalog'
+      comment: 'Gold Schema in custom novacart catalog'
   
   jobs:
     novacart_ingest_and_transform_workflow:
