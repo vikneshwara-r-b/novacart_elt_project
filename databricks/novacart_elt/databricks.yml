@@ -1,0 +1,32 @@
+# This is a Databricks asset bundle definition for novacart_elt.
+# See https://docs.databricks.com/dev-tools/bundles/index.html for documentation.
+bundle:
+  name: novacart_elt
+  uuid: 9ea62b31-5428-4498-b80c-50d44e71ad66
+
+# Variables - Set via environment variables before deployment
+variables:
+  user_email:
+    description: "User email for permissions"
+    default: ${env.USER_EMAIL}
+
+include:
+  - resources/*.yml
+  - resources/*/*.yml
+
+targets:
+  dev:
+    # The default target uses 'mode: development' to create a development copy.
+    # - Deployed resources get prefixed with '[dev my_user_name]'
+    # - Any job schedules and triggers are paused by default.
+    # See also https://docs.databricks.com/dev-tools/bundles/deployment-modes.html.
+    mode: development
+    default: true
+
+  prod:
+    mode: production
+    workspace:
+      root_path: /Workspace/PROD/.bundle/${bundle.name}/${bundle.target}
+    permissions:
+      - user_name: ${env.USER_EMAIL}
+        level: CAN_MANAGE

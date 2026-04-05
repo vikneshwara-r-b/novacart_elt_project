@@ -1,0 +1,39 @@
+# Databricks Workflow Definition for Novacart use case study
+resources:
+  jobs:
+    novacart_ingest_and_transform_workflow:
+      name: novacart_ingest_and_transform_workflow
+      
+      # Task definitions
+      tasks:
+        # Step 1: Execute Bronze ingestion notebook
+        - task_key: bronze-ingestion
+          notebook_task:
+            notebook_path: ../notebooks/bronze_work.ipynb
+            source: WORKSPACE
+        
+        # Step 2: Execute silver transformation notebook
+        - task_key: silver-transformation
+          depends_on:
+            - task_key: bronze-ingestion
+          notebook_task:
+            notebook_path: ../notebooks/silver_work.ipynb
+            source: WORKSPACE
+        
+        # Step 2: Execute silver transformation notebook
+        - task_key: gold-transformation
+          depends_on:
+            - task_key: silver-ingestion
+          notebook_task:
+            notebook_path: ../notebooks/gold_work.ipynb
+            source: WORKSPACE
+        
+      
+      # Timeout and retry configuration
+      timeout_seconds: 0
+      max_concurrent_runs: 1
+      
+      # Tags for organization
+      tags:
+        project: esa_hk_poc
+        environment: production
