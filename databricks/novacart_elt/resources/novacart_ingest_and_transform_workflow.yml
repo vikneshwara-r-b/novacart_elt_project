@@ -23,7 +23,7 @@ resources:
         # Step 2: Execute silver transformation notebook
         - task_key: gold-transformation
           depends_on:
-            - task_key: silver-ingestion
+            - task_key: silver-transformation
           notebook_task:
             notebook_path: ../notebooks/gold_work.ipynb
             source: WORKSPACE
