@@ -2,14 +2,7 @@
 # See https://docs.databricks.com/dev-tools/bundles/index.html for documentation.
 bundle:
   name: novacart_elt
-  uuid: 9ea62b31-5428-4498-b80c-50d44e71ad66
   engine: direct
-
-# Variables - Set via environment variables before deployment
-variables:
-  user_email:
-    description: "User email for permissions"
-    default: ${env.USER_EMAIL}
 
 include:
   - resources/*.yml
