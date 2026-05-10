@@ -1,24 +1,6 @@
 # Databricks Workflow Definition for Novacart use case study
 resources:
-  catalogs:
-    novacart_catalog:
-      name: novacart_catalog
-      comment: 'Catalog created by Declarative Automation Bundles for Novacart Case Study'
 
-  schemas:
-    bronze_schema:
-      name: bronze_schema
-      catalog_name: ${resources.catalogs.novacart_catalog.name}
-      comment: 'Bronze Schema in custom novacart catalog'
-    silver_schema:
-      name: silver_schema
-      catalog_name: ${resources.catalogs.novacart_catalog.name}
-      comment: 'Silver Schema in custom novacart catalog'
-    gold_schema:
-      name: gold_schema
-      catalog_name: ${resources.catalogs.novacart_catalog.name}
-      comment: 'Gold Schema in custom novacart catalog'
-  
   jobs:
     novacart_ingest_and_transform_workflow:
       name: novacart_ingest_and_transform_workflow
