@@ -5,6 +5,21 @@ resources:
     novacart_ingest_and_transform_workflow:
       name: novacart_ingest_and_transform_workflow
       
+      # Job-level parameters (shared across all tasks)
+      parameters:
+        - name: catalog_name
+          default: novacart_catalog
+        - name: foreign_catalog_name
+          default: novacart_external_mssql_oltp_db
+        - name: source_schema
+          default: dbo
+        - name: bronze_schema
+          default: bronze_schema
+        - name: silver_schema
+          default: silver_schema
+        - name: gold_schema
+          default: gold_schema
+      
       # Task definitions
       tasks:
         # Step 1: Execute Bronze ingestion notebook
@@ -12,6 +27,11 @@ resources:
           notebook_task:
             notebook_path: ../notebooks/bronze_work.ipynb
             source: WORKSPACE
+            base_parameters:
+              catalog_name: "{{job.parameters.catalog_name}}"
+              foreign_catalog_name: "{{job.parameters.foreign_catalog_name}}"
+              bronze_schema: "{{job.parameters.bronze_schema}}"
+              source_schema: "{{job.parameters.source_schema}}"
         
         # Step 2: Execute silver transformation notebook
         - task_key: silver-transformation
@@ -20,14 +40,22 @@ resources:
           notebook_task:
             notebook_path: ../notebooks/silver_work.ipynb
             source: WORKSPACE
+            base_parameters:
+              catalog_name: "{{job.parameters.catalog_name}}"
+              bronze_schema: "{{job.parameters.bronze_schema}}"
+              silver_schema: "{{job.parameters.silver_schema}}"
         
-        # Step 2: Execute silver transformation notebook
+        # Step 3: Execute gold transformation notebook
         - task_key: gold-transformation
           depends_on:
             - task_key: silver-transformation
           notebook_task:
             notebook_path: ../notebooks/gold_work.ipynb
             source: WORKSPACE
+            base_parameters:
+              catalog_name: "{{job.parameters.catalog_name}}"
+              silver_schema: "{{job.parameters.silver_schema}}"
+              gold_schema: "{{job.parameters.gold_schema}}"
         
       
       # Timeout and retry configuration
