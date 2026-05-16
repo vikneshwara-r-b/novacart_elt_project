@@ -1,0 +1,15 @@
+# This is a Databricks asset bundle definition for novacart_elt.
+# See https://docs.databricks.com/dev-tools/bundles/index.html for documentation.
+bundle:
+  name: novacart_elt
+  engine: direct
+
+include:
+  - resources/*.yml
+  - resources/*/*.yml
+
+targets:
+  prod:
+    mode: production
+    workspace:
+      root_path: /Workspace/PROD/.bundle/${bundle.name}/${bundle.target}
