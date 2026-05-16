@@ -19,8 +19,6 @@ resources:
           default: silver_schema
         - name: gold_schema
           default: gold_schema
-        - name: job_run_id
-          default: ""
       
       # Task definitions
       tasks:
