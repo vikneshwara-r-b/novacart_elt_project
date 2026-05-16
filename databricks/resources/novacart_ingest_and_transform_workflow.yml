@@ -32,6 +32,7 @@ resources:
               foreign_catalog_name: "{{job.parameters.foreign_catalog_name}}"
               bronze_schema: "{{job.parameters.bronze_schema}}"
               source_schema: "{{job.parameters.source_schema}}"
+              run_id: "{{job.run_id}}"
         
         # Step 2: Execute silver transformation notebook
         - task_key: silver-transformation
@@ -44,6 +45,7 @@ resources:
               catalog_name: "{{job.parameters.catalog_name}}"
               bronze_schema: "{{job.parameters.bronze_schema}}"
               silver_schema: "{{job.parameters.silver_schema}}"
+              run_id: "{{job.run_id}}"
         
         # Step 3: Execute gold transformation notebook
         - task_key: gold-transformation
@@ -56,6 +58,7 @@ resources:
               catalog_name: "{{job.parameters.catalog_name}}"
               silver_schema: "{{job.parameters.silver_schema}}"
               gold_schema: "{{job.parameters.gold_schema}}"
+              run_id: "{{job.run_id}}"
         
       
       # Timeout and retry configuration
